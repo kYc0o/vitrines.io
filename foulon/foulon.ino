@@ -21,12 +21,12 @@
 #define SWEEP         4
 
 // RF12 radio settings
-#define NODE_NUMBER   6
 #define MAJOR_VERSION RF12_EEPROM_VERSION // bump when EEPROM layout changes
 #define MINOR_VERSION 2                   // bump on other non-trivial changes
 #define VERSION "[RF12demo.12]"           // keep in sync with the above
 
 // Misc settings
+#define NODE_NUMBER   4
 #define SERIAL_BAUD   57600          // adjust as needed
 #define DATAFLASH     0              // set to 0 for non-JeeLinks, else 4/8/16 (Mbit)
 #define LED_PIN       9              // activity LED, comment out to disable
@@ -514,6 +514,7 @@ void loop() {
     if(rf12_data[0] == NODE_NUMBER) {
       switch(leds_mode)
       {
+        /*
         case JUST_ON:
         Serial.print("Starting JUST_ON show for ");
         Serial.print(MINUTES);
@@ -521,6 +522,7 @@ void loop() {
         leds_mode++;
         justOn(NODE_COLOR);
         break;
+        */
       
         case CHASE:
         Serial.print("Starting CHASE show for ");
@@ -550,13 +552,13 @@ void loop() {
         Serial.print("Starting SWEEP show for ");
         Serial.print(MINUTES);
         Serial.println(" minutes");
-        leds_mode = 0;
+        leds_mode = 1;
         sweep(NODE_COLOR);
         break;
       
         default:
         Serial.println("Bad show!");
-        leds_mode = 0;
+        leds_mode = 1;
         break;
       }
     Serial.println("Done!");    
