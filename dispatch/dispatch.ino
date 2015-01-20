@@ -65,5 +65,5 @@ void loop() {
     Wire.write(pInputsVals[i]);
   }
   Wire.endTransmission();
-  delay(1000);
+  delay(50);
 }
