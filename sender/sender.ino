@@ -5,7 +5,7 @@
 #include <avr/pgmspace.h>
 #include <util/parity.h>
 
-// Colors families
+// Color families
 #define RED        0                // 1, 2, 3, 4, 5
 #define BLUE       1                // 6, 7 ,8, 9
 #define GREEN      2                // 10, 11, 12
@@ -448,11 +448,22 @@ void setup() {
   Wire.begin(4);                // join i2c bus with address #4
   Wire.onReceive(receiveEvent); // register event
   Serial.println("I2C Slave started!");
+//  for
+
 }
 
 void loop()
 {
   rf12_easyPoll();
+  /*for(int k = 1; k < 13; k++)
+  {
+    rf12_easyPoll();
+    rf12_easySend(&k, sizeof k);
+    Serial.print("Sending to node ");
+    Serial.print(k);
+    Serial.println();
+    delay(1000);
+  }*/
 }
 
 // function that executes whenever data is received from master
@@ -493,37 +504,51 @@ void receiveEvent(int howMany)
   }
 }
 
+int rand_poiton = 1;
+
 static void sendToFamily(int family)
-{
-  int rand;
-  
+{  
   switch(family)
   {
     case RED:
-    rand = random(1, 6);
+    rand_poiton = random(1, 6);
+    /*
+    if(rand_poiton == 5)
+      rand_poiton = 1;
+      */
     Serial.print("Sending to node ");
-    Serial.print(rand);
+    Serial.print(rand_poiton);
     Serial.println();
     break;
     
     case BLUE:
-    rand = random(6, 10);
+    rand_poiton = random(6, 10);
+    /*
+    if(rand_poiton == 9)
+      rand_poiton = 6;
+      */
     Serial.print("Sending to node ");
-    Serial.print(rand);
+    Serial.print(rand_poiton);
     Serial.println();
     break;
     
     case GREEN:
-    rand = random(10, 13);
+    rand_poiton = random(10, 13);
+    /*if(rand_poiton == 12)
+      rand_poiton = 10;
+      */
     Serial.print("Sending to node ");
-    Serial.print(rand);
+    Serial.print(rand_poiton);
     Serial.println();
     break;
     
     default:
+    rand_poiton = 0;
     Serial.println("Node does not exist");
     break;
   }
   
-  rf12_easySend(&rand, sizeof rand);
+  rf12_easyPoll();
+  rf12_easySend(&rand_poiton, sizeof rand_poiton);
+  rand_poiton ++;
 }
