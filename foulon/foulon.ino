@@ -8,7 +8,7 @@
 // LED strip settings
 #define STRIP_PIN     7              // JeeNode pin for strip
 #define N_LEDS        42             // Number of pixels on strip
-#define MINUTES       0.5            // On delay in minutes
+#define MINUTES       10            // On delay in minutes
 #define PULSES        MINUTES * 60
 // FIXME RED cannot be turn full on, power issues
 #define RED           0x600000       // Turn strip on with RED color
@@ -26,11 +26,11 @@
 #define VERSION "[RF12demo.12]"           // keep in sync with the above
 
 // Misc settings
-#define NODE_NUMBER   4
+#define NODE_NUMBER   9
 #define SERIAL_BAUD   57600          // adjust as needed
 #define DATAFLASH     0              // set to 0 for non-JeeLinks, else 4/8/16 (Mbit)
 #define LED_PIN       9              // activity LED, comment out to disable
-#define NODE_COLOR    RED            // Node color
+#define NODE_COLOR    BLUE            // Node color
 
 /// Save a few bytes of flash by declaring const if used more than once.
 const char INVALID1[] PROGMEM = "\rInvalid\n";
@@ -40,7 +40,7 @@ const char INITFAIL[] PROGMEM = "config save failed\n";
 Adafruit_NeoPixel strip = Adafruit_NeoPixel(N_LEDS, STRIP_PIN, NEO_GRB + NEO_KHZ800);
 
 // Switch between different modes
-int leds_mode = 0;
+int leds_mode = 1;
 
 static void activityLed (byte on) {
 #ifdef LED_PIN
@@ -383,8 +383,6 @@ static void handleInput (char c) {
       displayVersion();
       rf12_configDump();
       break;
-
-// the following commands all get optimised away when TINY is set
 
     case 'l': // turn activity LED on or off
       activityLed(value);
