@@ -63,7 +63,9 @@ void loop() {
   Wire.beginTransmission(4);
   for(uint16_t i = 0; i < 9; i++){
     Wire.write(pInputsVals[i]);
+    Serial.print(pInputsVals[i]);
   }
+  Serial.println();
   Wire.endTransmission();
   delay(50);
 }
